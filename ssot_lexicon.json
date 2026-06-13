@@ -1,0 +1,62 @@
+{
+  "business_info": {
+    "name": "Pabrik Kosmetik Tangerang",
+    "phone": "+62 838-6367-0421",
+    "phone_formatted": "+62 838-6367-0421",
+    "email": "halo@pabrikkosmetiktangerang.net",
+    "address": "Kawasan Industri Tangerang, Banten 15143",
+    "google_maps_link": "https://maps.google.com/?q=Kawasan+Industri+Tangerang"
+  },
+  "packages": {
+    "basic": {
+      "name": "Paket Maklon Basic",
+      "price": "Rp 35.000.000",
+      "price_numeric": 35000000,
+      "moq": "500 pcs",
+      "moq_numeric": 500,
+      "details": "Cocok untuk brand owner pemula. Termasuk riset formula standar, pengurusan legalitas BPOM, sertifikasi Halal, HAKI merek, dan produksi massal 500 pcs."
+    },
+    "enterprise": {
+      "name": "Paket Maklon Enterprise (Custom)",
+      "price": "Custom / Hubungi Sales",
+      "price_numeric": null,
+      "moq": "1.000+ pcs",
+      "moq_numeric": 1000,
+      "details": "Cocok untuk brand skala menengah hingga besar. Formula kustom tingkat lanjut (advanced active ingredients), kemasan eksklusif custom, prioritas antrean produksi, dan support marketing kit."
+    }
+  },
+  "brand_lexicon": {
+    "official_name": "Pabrik Kosmetik Tangerang",
+    "forbidden_abbreviations": ["PKT"],
+    "official_terms": {
+      "maklon": "Maklon",
+      "certification_1": "CPKB Grade A",
+      "certification_2": "BPOM & Halal MUI"
+    }
+  },
+  "core_entities": [
+    {
+      "name": "Badan Pengawas Obat dan Makanan",
+      "abbreviation": "BPOM",
+      "wikipedia_url": "https://id.wikipedia.org/wiki/Badan_Pengawas_Obat_dan_Makanan",
+      "official_website": "https://www.pom.go.id/"
+    },
+    {
+      "name": "Majelis Ulama Indonesia",
+      "abbreviation": "MUI",
+      "wikipedia_url": "https://id.wikipedia.org/wiki/Majelis_Ulama_Indonesia",
+      "official_website": "https://halal.go.id/"
+    },
+    {
+      "name": "Cara Pembuatan Kosmetika yang Baik",
+      "abbreviation": "CPKB",
+      "description": "Pedoman industri kosmetik Indonesia yang mengacu pada standar ASEAN Cosmetic Directive."
+    },
+    {
+      "name": "Hak Kekayaan Intelektual",
+      "abbreviation": "HAKI",
+      "wikipedia_url": "https://id.wikipedia.org/wiki/Kekayaan_intelektual",
+      "official_website": "https://www.dgip.go.id/"
+    }
+  ]
+}
