@@ -74,8 +74,8 @@ html {{ scroll-behavior: smooth; }}
 </div>
 
 <!-- HERO SECTION -->
-<section class="bg-gradient-to-r from-primary to-primary-light py-20 lg:py-28 text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-secondary via-transparent to-transparent"></div>
+<section class="{hero_gradient} py-20 lg:py-28 text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="max-w-3xl fade-in">
       <span class="inline-block bg-secondary/20 text-secondary border border-secondary/30 font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider mb-6">Jasa Maklon Spesialis</span>
@@ -963,6 +963,17 @@ for page in pages_data:
         
     schema_str = json.dumps(schema, ensure_ascii=False, indent=2)
     
+    # Define dynamic hero gradient for each product
+    gradients = {
+        "Serum Wajah": "bg-gradient-to-r from-blue-700 to-indigo-900",
+        "Sunscreen": "bg-gradient-to-r from-amber-600 to-orange-700",
+        "Facial Wash": "bg-gradient-to-r from-teal-600 to-emerald-800",
+        "Body Lotion": "bg-gradient-to-r from-rose-500 to-pink-700",
+        "Body Scrub": "bg-gradient-to-r from-stone-600 to-neutral-800",
+        "Shampo Anti-Rontok": "bg-gradient-to-r from-purple-700 to-fuchsia-900"
+    }
+    hero_gradient = gradients.get(product_name, "bg-gradient-to-r from-primary to-primary-light")
+
     html = HTML_TEMPLATE.format(
         meta_title=page["meta_title"],
         meta_desc=page["meta_desc"],
@@ -970,6 +981,7 @@ for page in pages_data:
         category=category,
         product_name=product_name,
         hero_desc=page["hero_desc"],
+        hero_gradient=hero_gradient,
         aeo_paragraph=page["aeo_paragraph"],
         main_content=page["main_content"],
         spec_cards=page["spec_cards"],

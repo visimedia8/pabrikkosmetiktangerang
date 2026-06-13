@@ -1,7 +1,7 @@
 import os
 import re
 
-NAVBAR_HTML = """<nav id="navbar" class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+NAVBAR_HTML = """<nav id="navbar" class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="/" class="flex items-center gap-2">
@@ -21,8 +21,48 @@ NAVBAR_HTML = """<nav id="navbar" class="fixed w-full z-50 bg-white/90 backdrop-
                         <span class="material-symbols-outlined text-[20px]">chat</span> WhatsApp
                     </a>
                 </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none p-2">
+                        <span class="material-symbols-outlined text-3xl" id="mobile-menu-icon">menu</span>
+                    </button>
+                </div>
             </div>
         </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="/" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Beranda</a>
+                <a href="/maklon-skincare.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Layanan</a>
+                <a href="/harga-maklon-kosmetik.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Harga</a>
+                <a href="/sertifikasi-bpom-halal.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Sertifikasi</a>
+                <a href="/tentang-kami.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Tentang Kami</a>
+                <a href="/artikel.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Blog</a>
+                <a href="https://wa.me/6283863670421" class="block px-3 py-3 mt-4 text-center text-white bg-cta hover:bg-cta-hover font-bold rounded-lg shadow-md flex justify-center items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">chat</span> WhatsApp Kami
+                </a>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.getElementById('mobile-menu-btn');
+                var menu = document.getElementById('mobile-menu');
+                var icon = document.getElementById('mobile-menu-icon');
+                if(btn && menu && icon) {
+                    btn.addEventListener('click', function() {
+                        if (menu.classList.contains('hidden')) {
+                            menu.classList.remove('hidden');
+                            icon.innerText = 'close';
+                        } else {
+                            menu.classList.add('hidden');
+                            icon.innerText = 'menu';
+                        }
+                    });
+                }
+            });
+        </script>
     </nav>"""
 
 FOOTER_HTML = """<footer class="bg-gray-900 pt-16 pb-8 border-t border-white/10 mt-12">
@@ -80,21 +120,21 @@ def update_file(filepath):
         content = re.sub(r'<nav.*?</nav>', NAVBAR_HTML, content, flags=re.DOTALL)
     else:
         # If no nav, insert after <body>
-        content = re.sub(r'<body[^>]*>', lambda m: m.group(0) + '\\n' + NAVBAR_HTML, content)
+        content = re.sub(r'<body[^>]*>', lambda m: m.group(0) + '\n' + NAVBAR_HTML, content)
     
     # Update Footer
     if '<footer' in content:
         content = re.sub(r'<footer.*?</footer>', FOOTER_HTML, content, flags=re.DOTALL)
     else:
         # If no footer, insert before </body>
-        content = content.replace('</body>', FOOTER_HTML + '\\n</body>')
+        content = content.replace('</body>', FOOTER_HTML + '\n</body>')
     
     # Remove old logo.png
     content = content.replace('<link rel="icon" href="/logo.png" type="image/png">', '')
     
     # Update Favicon (add to head if not present)
     if '<head>' in content and FAVICON_TAG not in content:
-        content = content.replace('</head>', f'    {FAVICON_TAG}\\n</head>')
+        content = content.replace('</head>', f'    {FAVICON_TAG}\n</head>')
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)

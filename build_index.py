@@ -46,7 +46,7 @@ articles.sort(key=lambda x: x["title"])
 html_cards = ""
 for a in articles:
     html_cards += f"""
-      <a href="/artikel/{a['slug']}.html" class="block group fade-in">
+      <a href="/artikel/{a['slug']}.html" class="article-card block group fade-in">
         <div class="bg-light-bg rounded-3xl overflow-hidden mb-4 h-56 relative border border-gray-100">
           <img src="{a['image']}" alt="{a['title']}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
         </div>
@@ -63,7 +63,72 @@ with open("artikel.html", "r", encoding="utf-8") as f:
 
 # Replace the grid content
 grid_pattern = re.compile(r'<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">.*?</div>\s*</div>\s*</section>', re.DOTALL)
-new_grid = f'<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">\n{html_cards}\n    </div>\n  </div>\n</section>'
+new_grid = f'''<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="article-grid">
+{html_cards}
+    </div>
+    
+    <!-- Pagination Controls -->
+    <div class="flex justify-center items-center gap-2 mt-12" id="pagination-controls">
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {{
+        const articles = document.querySelectorAll('.article-card');
+        const itemsPerPage = 9;
+        const totalPages = Math.ceil(articles.length / itemsPerPage);
+        let currentPage = 1;
+
+        function renderPage(page) {{
+            currentPage = page;
+            articles.forEach((card, index) => {{
+                if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {{
+                    card.style.display = 'block';
+                    setTimeout(() => {{
+                        card.classList.add('visible');
+                    }}, 50);
+                }} else {{
+                    card.style.display = 'none';
+                    card.classList.remove('visible');
+                }}
+            }});
+            renderControls();
+        }}
+
+        function renderControls() {{
+            const container = document.getElementById('pagination-controls');
+            container.innerHTML = '';
+            if (totalPages <= 1) return;
+
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '<span class="material-symbols-outlined">chevron_left</span>';
+            prevBtn.className = `w-10 h-10 rounded-full flex items-center justify-center transition-colors ${{currentPage === 1 ? 'text-gray-400 bg-gray-100 cursor-not-allowed' : 'text-primary hover:bg-secondary hover:text-white bg-gray-200'}}`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {{ renderPage(currentPage - 1); window.scrollTo({{ top: document.getElementById('article-grid').offsetTop - 100, behavior: 'smooth' }}); }};
+            container.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {{
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `w-10 h-10 rounded-full font-bold flex items-center justify-center transition-colors ${{i === currentPage ? 'bg-primary text-white' : 'text-primary hover:bg-secondary hover:text-white bg-gray-200'}}`;
+                btn.onclick = () => {{ renderPage(i); window.scrollTo({{ top: document.getElementById('article-grid').offsetTop - 100, behavior: 'smooth' }}); }};
+                container.appendChild(btn);
+            }}
+
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '<span class="material-symbols-outlined">chevron_right</span>';
+            nextBtn.className = `w-10 h-10 rounded-full flex items-center justify-center transition-colors ${{currentPage === totalPages ? 'text-gray-400 bg-gray-100 cursor-not-allowed' : 'text-primary hover:bg-secondary hover:text-white bg-gray-200'}}`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {{ renderPage(currentPage + 1); window.scrollTo({{ top: document.getElementById('article-grid').offsetTop - 100, behavior: 'smooth' }}); }};
+            container.appendChild(nextBtn);
+        }}
+
+        if(articles.length > 0) {{
+            renderPage(1);
+        }}
+    }});
+    </script>
+  </div>
+</section>'''
 
 new_content = grid_pattern.sub(new_grid, content)
 

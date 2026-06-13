@@ -8,8 +8,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <script>tailwind.config={theme:{extend:{colors:{primary:'#1A3A4A','primary-light':'#2A5A72',secondary:'#D4A855',cta:'#2ECC8B','off-white':'#F8F9FA','light-bg':'#F0F4F5'},fontFamily:{sans:['Plus Jakarta Sans','sans-serif']}}}}</script>
-    \n    <link rel="icon" href="/logo.svg" type="image/svg+xml">\n</head>
-<body class="bg-off-white text-primary font-sans antialiased">\n<nav id="navbar" class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+</head>
+<body class="bg-off-white text-primary font-sans antialiased">
+<nav id="navbar" class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="/" class="flex items-center gap-2">
@@ -29,8 +32,48 @@
                         <span class="material-symbols-outlined text-[20px]">chat</span> WhatsApp
                     </a>
                 </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none p-2">
+                        <span class="material-symbols-outlined text-3xl" id="mobile-menu-icon">menu</span>
+                    </button>
+                </div>
             </div>
         </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="/" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Beranda</a>
+                <a href="/maklon-skincare.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Layanan</a>
+                <a href="/harga-maklon-kosmetik.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Harga</a>
+                <a href="/sertifikasi-bpom-halal.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Sertifikasi</a>
+                <a href="/tentang-kami.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Tentang Kami</a>
+                <a href="/artikel.html" class="block px-3 py-2 text-gray-800 hover:text-primary font-semibold hover:bg-gray-50 rounded-md">Blog</a>
+                <a href="https://wa.me/6283863670421" class="block px-3 py-3 mt-4 text-center text-white bg-cta hover:bg-cta-hover font-bold rounded-lg shadow-md flex justify-center items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">chat</span> WhatsApp Kami
+                </a>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.getElementById('mobile-menu-btn');
+                var menu = document.getElementById('mobile-menu');
+                var icon = document.getElementById('mobile-menu-icon');
+                if(btn && menu && icon) {
+                    btn.addEventListener('click', function() {
+                        if (menu.classList.contains('hidden')) {
+                            menu.classList.remove('hidden');
+                            icon.innerText = 'close';
+                        } else {
+                            menu.classList.add('hidden');
+                            icon.innerText = 'menu';
+                        }
+                    });
+                }
+            });
+        </script>
     </nav>
 <div class="pt-24 pb-2 bg-white border-b border-gray-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex text-sm text-gray-500 items-center gap-2">
@@ -155,5 +198,6 @@
       <p>&copy; 2026 Pabrik Kosmetik Tangerang. All rights reserved.</p>
     </div>
   </div>
-</footer>\n</body>
+</footer>
+</body>
 </html>
